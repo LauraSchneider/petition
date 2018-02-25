@@ -1,12 +1,98 @@
 #canvas {
-    background-color: rgb(230, 193, 205);
-    margin-top: 20px;
+    background-color: #dec782;
+    position: absolute;
+    top: 87%;
+    left: 33%;
+    height: 8%;
+    border: 3px solid darkolivegreen;
+}
+
+.first {
+  background-color: #dec782;
+  border: 3px solid darkolivegreen;
+  position: absolute;
+  top: 82%;
+  left: 33%;
+  height:  20px;
+  width: 13%;
+}
+
+.last {
+  background-color: #dec782;
+  border: 3px solid darkolivegreen;
+  position: absolute;
+  top: 82%;
+  left: 48%;
+  height:  20px;
+  width: 13%;
 }
 
 body {
-    background-color: rgb(241, 227, 137);
+    background-color: black;
+    margin:0px;
+
 }
 
 button {
     margin-left: 20px;
+    position: absolute;
+    top: 90%;
+    left: 63%;
+    height: 36px;
+    width: 93px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-family: Roboto Slab;
+    font-weight:  bold;
+    border: 3px solid black;
+    background-color: #b0a7a7;
+    color: white;
+    font:  20px;
 }
+
+
+h1 {
+    font-family: Roboto Slab;
+    font-size: 44px;
+    color: whitesmoke;
+    position: absolute;
+    top: 54%;
+    left: 31%;
+}
+
+#p1 {
+        font-family: Roboto Slab;
+        font-size: 20px;
+        color: whitesmoke;
+        position: absolute;
+        top: 64%;
+        left: 32%;
+}
+
+#p2 {
+    font-family: Roboto Slab;
+    font-size: 20px;
+    color: whitesmoke;
+    position: absolute;
+    top: 69%;
+    left: 18%;
+}
+
+#p3 {
+    font-family: Roboto Slab;
+    font-size: 24px;
+    color: whitesmoke;
+    position: absolute;
+    top: 73%;
+    left: 37%;
+}
+.container {
+    height: 387px;
+    width: 100%;
+    background-image: url(https://c402277.ssl.cf1.rackcdn.com/photos/10341/images/hero_full/wild_dogs-web.jpg?1447180370);
+    /* background-image: url(https://c402277.ssl.cf1.rackcdn.com/photos/10341/images/hero_full/wild_dogs-web.jpg?1447180370); */
+    /* background-position: center; */
+    background-size: cover;
+    /* background-image: url(../img/dog1.jpg); */
+/* why doesn't this work? */
+    }
