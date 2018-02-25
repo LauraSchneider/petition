@@ -9,6 +9,10 @@ const signPetition = db.signPetition;
 const getSigners = db.getSigners;
 const getSigURL = db.getSigURL;
 const getSigCount = db.getSigCount;
+const userRegistration = db.userRegistration;
+const hashPassword = db.hashPassword;
+const checkPassword = db.checkPassword;
+
 
 const checkForSigId = function(req, res, next) {
     if (req.session.sigId) {
@@ -46,6 +50,58 @@ app.get("/petition", function(req, res) {
     }
 });
 
+app.get("/registration", function(req, res) {
+    res.render("registration", {layout: "main"});
+});
+
+app.post("/registration", function(req, res) {
+    if (!req.body.first || !req.body.last || !req.body.email || !req.body.password) {
+        res.render("registration", {
+            layout: "main",
+            error: "Please fix."
+        });
+
+    } else {
+        hashPassword(req.body.password).then(function(hashedPassword) { //access to hashed password inside .then function
+            userRegistration(req.body.first, req.body.last, req.body.email, hashedPassword).then(function(results) {
+                req.session.user = {
+                    id: results.rows[0].id,
+                    first: req.body.first,
+                    last: req.body.last
+
+                };
+                // console.log("FIRE", hash);
+                res.redirect("/petition"); //linked to thanks page
+            });
+        });
+    }
+});
+
+
+app.get("/login", function(req, res) {
+    res.render("login", {layout: "main"});
+});
+
+app.post("/petition", function(req, res) {
+    //capturing user input
+    if (!req.body.first || !req.body.last || !req.body.signature) {
+        res.render("petition", {
+            layout: "main",
+            //if the user didn't fill  out  all the fields an error occours
+            error: "Please fix."
+        });
+    } else {
+        //if signed successfully with all fields filled out
+        signPetition(req.body.first, req.body.last, req.body.signature).then(function(results) {
+            //results contains the id from database
+            const sigId = results.rows[0].id;
+            req.session = {
+                sigId
+            };
+            res.redirect("/thankyou"); //linked to thanks page
+        });
+    }
+});
 app.get("/thankyou", checkForSigId, function(req, res) {
     Promise.all([
         getSigURL(req.session.sigId),
@@ -77,25 +133,7 @@ app.get("/signers", checkForSigId, function(req, res) {
     });
 });
 
-app.post("/petition", function(req, res) {
-    //capturing user input
-    if (!req.body.first || !req.body.last || !req.body.signature) {
-        res.render("petition", {
-            layout: "main",
-            //if the user didn't fill  out  all the fields an error occours
-            error: "Please fix."
-        });
-    } else {
-        //if signed successfully with all fields filled out
-        signPetition(req.body.first, req.body.last, req.body.signature).then(function(results) {
-            //results contains the id from database
-            const sigId = results.rows[0].id;
-            req.session = {
-                sigId
-            };
-            res.redirect("/thankyou"); //linked to thanks page
-        });
-    }
-});
+
+
 
 app.listen(8080, () => console.log("I'm listening"));
