@@ -155,6 +155,22 @@ function getSignersbyCity(city) {
     });
 }
 
+function editPortfolio(id) {
+    return new Promise(function(resolve, reject) {
+        const q = `SELECT users.first, users.last, users.email, user_profiles.age, user_profiles.url
+    FROM users
+    JOIN user_profiles
+    ON users.id = user_profiles.user_id
+    WHERE users.id = $1`;
+        const params = [id];
+        db.query(q, params).then(function(results) {
+            resolve(results.rows);
+        }).catch(function(err) {
+            reject(err);
+        });
+    });
+}
+
 module.exports = {
     hashPassword,
     userRegistration,
@@ -165,5 +181,6 @@ module.exports = {
     getSigners,
     userLogin,
     userProfile,
-    getSignersbyCity
+    getSignersbyCity,
+    editPortfolio,
 };

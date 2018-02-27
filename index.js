@@ -15,6 +15,7 @@ const checkPassword = db.checkPassword;
 const userLogin = db.userLogin;
 const userProfile = db.userProfile;
 const getSignersbyCity = db.getSignersbyCity;
+const editPortfolio = db.editPortfolio;
 
 const checkForSigId = function(req, res, next) {
     if (req.session.sigId) {
@@ -103,13 +104,14 @@ app.post("/petition", function(req, res) {
         });
     } else {
         //if signed successfully with all fields filled out
-        console.log("LOOK HERE", req.body.singature);
         signPetition(req.body.signature).then(function(results) {
             //results contains the id from database
             const sigId = results.rows[0].id;
-            req.session = {
-                sigId
-            };
+            req.session.sigId = sigId;
+            // req.session = {
+            //     sigId
+            // };
+            console.log("NEW SESSION", req.session);
             res.redirect("/thankyou"); //linked to thanks page
         });
     }
@@ -182,5 +184,15 @@ app.get("/petition/signers/:city", function(req, res) {
         });
     });
 });
+
+app.get('/edit', function(req,res) {
+    console.log("SESSION TIME", req.session);
+    editPortfolio(req.session.user.id).then(function(results) {
+        console.log("RESULLLTS", results);
+        res.render("edit", {
+            layout: "main",
+        })
+    })
+})
 
 app.listen(8080, () => console.log("I'm listening"));
