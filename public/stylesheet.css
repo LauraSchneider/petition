@@ -28,7 +28,7 @@
 }
 
 body {
-    background-color: black;
+    background-color: green;
     margin:0px;
 
 }
@@ -87,12 +87,13 @@ h1 {
     left: 37%;
 }
 .container {
+
     height: 387px;
     width: 100%;
-    background-image: url(https://c402277.ssl.cf1.rackcdn.com/photos/10341/images/hero_full/wild_dogs-web.jpg?1447180370);
+    /* background-image: url(https://c402277.ssl.cf1.rackcdn.com/photos/10341/images/hero_full/wild_dogs-web.jpg?1447180370); */
     /* background-image: url(https://c402277.ssl.cf1.rackcdn.com/photos/10341/images/hero_full/wild_dogs-web.jpg?1447180370); */
     /* background-position: center; */
-    background-size: cover;
-    /* background-image: url(../img/dog1.jpg); */
-/* why doesn't this work? */
+    /* background-size: cover; */
+    background-image: url(./img/dog1.jpg);
+/* why doesn't this work?
     }
