@@ -248,20 +248,25 @@ function selectInfoFromUsersTable(userId) {
     return new Promise(function(resolve, reject) {
         const q = `SELECT first, last, email FROM users WHERE id = $1`;
         const params = [userId];
-        db.query(q, params).then(function(results) {
+        db.query(q, params).then(function() {
+            resolve();
+        }).catch(function(err) {
+            reject(err);
+        });
+    });
+}
+
+function deleteSigId(sigId) {
+    return new Promise(function(resolve, reject) {
+        const q = `DELETE FROM signatures WHERE id = $1`;
+        const params = [sigId]
+        db.query(q,params).then(function(results) {
             resolve(results.rows[0]);
         }).catch(function(err) {
             reject(err);
         });
     });
-};
-
-// function updateUserProfileRow() {
-//
-// }
-//first profile table for not null function query to update
-//second user profile will be insert or udpate so 2 functions
-//third checks if any lines in your user profile
+}
 
 module.exports = {
     hashPassword,
@@ -280,5 +285,7 @@ module.exports = {
     insertProfile,
     updateUserProfile,
     checkForRowInUserProfile,
-    selectInfoFromUsersTable
+    selectInfoFromUsersTable,
+    deleteSigId
+
 };

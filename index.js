@@ -22,6 +22,7 @@ const insertProfile = db.insertProfile;
 const updateUserProfile = db.updateUserProfile;
 const checkForRowInUserProfile = db.checkForRowInUserProfile;
 const selectInfoFromUsersTable = db.selectInfoFromUsersTable;
+const deleteSigId = db.deleteSigId;
 // const csurf =require("csurf");
 //const cache = require('./cache');
 const checkForSigId = function(req, res, next) {
@@ -246,7 +247,7 @@ app.post('/edit', function(req, res) {
             //we have updated the user_profiles table. Redirect here.
             // res.redirect('/edit')
             checkForRowInUserProfile(req.session.user.id).then(function(rowExists) {
-            
+
                 if (rowExists) {
                     updateUserProfile(age, city, homepage, req.session.user.id).then(function() {
 
@@ -270,6 +271,14 @@ app.post('/edit', function(req, res) {
     //     console.log(checkForRowInUserProfile);
     // };
 
+});
+
+app.post('/delete', function(req, res) {
+    deleteSigId(req.session.sigId).then(function(results) {
+        console.log("RESULTS", results);
+        req.session.sigId = null;
+        res.redirect('./petition')
+    });
 });
 //if row exists is true do an updateWithPasswordProfile if not do an insert
 
