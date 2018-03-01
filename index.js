@@ -15,8 +15,15 @@ const checkPassword = db.checkPassword;
 const userLogin = db.userLogin;
 const userProfile = db.userProfile;
 const getSignersbyCity = db.getSignersbyCity;
-const editPortfolio = db.editPortfolio;
-
+const populateProfile = db.populateProfile;
+const updateWithPasswordProfile = db.updateWithPasswordProfile;
+const updateWithoutPasswordProfile = db.updateWithoutPasswordProfile;
+const insertProfile = db.insertProfile;
+const updateUserProfile = db.updateUserProfile;
+const checkForRowInUserProfile = db.checkForRowInUserProfile;
+const selectInfoFromUsersTable = db.selectInfoFromUsersTable;
+// const csurf =require("csurf");
+//const cache = require('./cache');
 const checkForSigId = function(req, res, next) {
     if (req.session.sigId) {
         next();
@@ -50,7 +57,6 @@ app.get("/profile", function(req, res) {
 });
 
 app.post("/profile", function(req, res) {
-    console.log("HERE", req.session);
     userProfile(req.body.age, req.body.city, req.body.url, req.session.user.id).then(function(results) {
         res.redirect('/petition')
     })
@@ -61,7 +67,7 @@ app.get("/login", function(req, res) {
 });
 
 app.post("/login", function(req, res) {
-    console.log(req.body.email);
+    // console.log(req.body.email);
     if (!req.body.email || !req.body.password) {
         res.render("login", {
             layout: "main",
@@ -72,10 +78,10 @@ app.post("/login", function(req, res) {
             checkPassword(req.body.password, results.rows[0].hash).then(function(doesMatch) {
                 if (doesMatch) {
 
-                    // req.session.userId = {
-                    //     id: results.rows[0].id,
-                    //     email: req.body.email
-                    // };
+                    req.session.userId = {
+                        id: results.rows[0].id,
+                        email: req.body.email
+                    };
                     res.redirect("/petition");
                 }
             });
@@ -85,9 +91,9 @@ app.post("/login", function(req, res) {
 });
 
 app.get("/petition", function(req, res) {
-    console.log("SESSION", req.session);
+    // console.log("SESSION", req.session);
     if (req.session.sigId) {
-        console.log("PETITION ROUTE");
+        // console.log("PETITION ROUTE");
         res.redirect('/thankyou');
     } else {
         res.render("petition", {layout: "signthepetition"});
@@ -111,7 +117,7 @@ app.post("/petition", function(req, res) {
             // req.session = {
             //     sigId
             // };
-            console.log("NEW SESSION", req.session);
+            // console.log("NEW SESSION", req.session);
             res.redirect("/thankyou"); //linked to thanks page
         });
     }
@@ -131,11 +137,11 @@ app.post("/registration", function(req, res) {
     } else {
         hashPassword(req.body.password).then(function(hashedPassword) { //access to hashed password inside .then function
             userRegistration(req.body.first, req.body.last, req.body.email, hashedPassword).then(function(results) {
+                console.log("RESULTS", results);
                 req.session.user = {
                     id: results.rows[0].id,
                     first: req.body.first,
                     last: req.body.last
-
                 };
                 res.redirect("/profile");
             });
@@ -185,14 +191,88 @@ app.get("/petition/signers/:city", function(req, res) {
     });
 });
 
-app.get('/edit', function(req,res) {
-    console.log("SESSION TIME", req.session);
-    editPortfolio(req.session.user.id).then(function(results) {
-        console.log("RESULLLTS", results);
-        res.render("edit", {
-            layout: "main",
-        })
-    })
-})
+app.get('/edit', function(req, res) {
+    checkForRowInUserProfile(req.session.user.id).then(function(rowExists) {
+        if (rowExists) {
+            populateProfile(req.session.user.id).then(function(results) {
+                // console.log("RESULTS", req.body);
+                res.render("edit", {
+                    layout: "main",
+                    first: results.first,
+                    last: results.last,
+                    email: results.email,
+                    age: results.age,
+                    url: results.url
+                });
+            });
+        } else {
+            selectInfoFromUsersTable(req.session.user.id).then(function(results) {
+                res.render('edit', {
+                    layout: 'main',
+                    first: results.first,
+                    last: results.last,
+                    email: results.email
+                });
+            });
 
+        }
+    });
+
+});
+
+app.post('/edit', function(req, res) {
+    // console.log("REQ.SESSIONS", req.session);
+    const {
+        first,
+        last,
+        email,
+        age,
+        city,
+        homepage,
+        password
+    } = req.body;
+    // const first = req.body.first
+    if (password) {
+        hashPassword(password).then(function(hashPassword) {
+            updateWithPasswordProfile(hashPassword, req.session.user.id).then(function() {
+                res.redirect('./petition')
+                //updated table w new password, still need to update the other stuff in user table as well as the stuff in user profiles table . then redirect.
+            });
+        });
+    } else {
+        updateWithoutPasswordProfile(first, last, email, req.session.user.id).then(function() {
+
+            //updates all the values for the user table we still need to update the user_profiles TABLE
+            //we have updated the user_profiles table. Redirect here.
+            // res.redirect('/edit')
+            checkForRowInUserProfile(req.session.user.id).then(function(rowExists) {
+            
+                if (rowExists) {
+                    updateUserProfile(age, city, homepage, req.session.user.id).then(function() {
+
+                        res.redirect('./petition');
+                    });
+
+                    //write a new function that updates the user profile table row. else a function that insert user profile table
+                } else {
+                    insertProfile(req.session.user.id, age, city, homepage).then(function() {
+                        res.redirect('./petition');
+
+                    })
+                }
+
+            });
+
+        });
+
+    }
+    // if (checkForRowInUserProfile) {
+    //     console.log(checkForRowInUserProfile);
+    // };
+
+});
+//if row exists is true do an updateWithPasswordProfile if not do an insert
+
+//include middle ware when adding csrf
+//req.body is infomration from a fomr
 app.listen(8080, () => console.log("I'm listening"));

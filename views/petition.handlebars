@@ -1,18 +1,35 @@
 
 
-<h1 class="save">Save the African Wild Dogs</h1>
-
 <div class="container">
-<p id="p1">Only 6600 African wild dogs remain in their natural habitat.</p>
-<p id="p2">Help us in creating a protected habitat for these African wild dogs, while reducing the human conflicts surrounding them.<p>
-<p id="p3"><strong>Support us by signing the petition.</strong> </p>
+<div class="photo"></div>
 </div>
-<form action="/petition" method="post">
-    <input id="hidden" type="hidden" name="signature">
-    <button>SUBMIT</button>
 
+<div class="container-a">
+    <div class="box-1">
+        <h1>Save the African Wild Dogs</h1>
+    </div>
+    <div class="box-2">
+        <p>Only 6600 African wild dogs remain in their natural habitat.</p>
+    </div>
+    <div class="box-2">
+        <p>Help us in creating a protected habitat for these African wild dogs, while reducing the human conflicts surrounding them.</p>
+    </div>
+    <div class="box-3">
+        <p><strong>Support us by signing the petition.</strong> </p>
+    </div>
+</div>
+
+<!-- <div class="forum"> -->
+<form class="form" action="/petition" method="post">
+
+    <input id="hidden" type="hidden" name="signature">
+    <div class="submit">
+    <button>SUBMIT</button>
+    </div>
+    <canvas id="canvas" width="400" height="70"></canvas>
 </form>
 
 {{error}}
-
-<canvas id="canvas" width="500" height="80"></canvas>
+<!-- <div class="canvas">
+<canvas class="canvas" width="500" height="80"></canvas></div> -->
+<!-- </div> -->

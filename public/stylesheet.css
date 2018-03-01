@@ -1,23 +1,54 @@
-#canvas {
-    background-color: #dec782;
-    position: absolute;
-    top: 87%;
-    left: 33%;
-    height: 8%;
-    border: 3px solid darkolivegreen;
+/* login page styling */
+
+/* .container-1 {
+display: flex;
+
+justify-content: space-between;
+} */
+
+/* .container-1 div {
+    border: 2px black solid; */
+    /* padding 10px; */
+
+/* border: 1px blue solid; */
+/* } */
+
+/* .box-1 {
+    flex: 2;
+
 }
+
+.box-2 {
+    flex: 1;
+
+}
+
+form {
+
+}
+
+/* petition styling */
+
+/* #canvas {
+    background-color: #dec782; */
+    /* position: absolute;
+    top: 87%;
+    left: 33%; */
+    /* height: 8%; */
+    /* border: 3px solid darkolivegreen;
+} */
 
 .first {
   background-color: #dec782;
   border: 3px solid darkolivegreen;
-  position: absolute;
+  /* position: absolute;
   top: 82%;
   left: 33%;
-  height:  20px;
+  height:  20px; */
   width: 13%;
 }
-
-.last {
+/*
+/* .last {
   background-color: #dec782;
   border: 3px solid darkolivegreen;
   position: absolute;
@@ -27,6 +58,7 @@
   width: 13%;
 }
 
+
 body {
     background-color: brown;
     margin:0px;
@@ -35,9 +67,9 @@ body {
 
 button {
     margin-left: 20px;
-    position: absolute;
+    /* position: absolute;
     top: 90%;
-    left: 63%;
+    left: 63%; */
     height: 36px;
     width: 93px;
     border-radius: 50px;
@@ -51,7 +83,7 @@ button {
 }
 
 
-h1 {
+/* h1 {
     font-family: Roboto Slab;
     font-size: 44px;
     color: whitesmoke;
@@ -84,16 +116,73 @@ h1 {
     color: whitesmoke;
     position: absolute;
     top: 73%;
-    left: 37%;
-}
+    left: 37%; */
+/* } */
 .container {
 
     height: 387px;
     width: 100%;
     /* background-image: url(https://c402277.ssl.cf1.rackcdn.com/photos/10341/images/hero_full/wild_dogs-web.jpg?1447180370); */
-    /* background-image: url(https://c402277.ssl.cf1.rackcdn.com/photos/10341/images/hero_full/wild_dogs-web.jpg?1447180370); */
-    /* background-position: center; */
-    /* background-size: cover; */
-    background-image: url(./img/dog1.jpg);
-/* why doesn't this work?
+
+    background-position: center;
+    background-size: cover;
+    background-image: url(./img/dog4.jpg);
+
     }
+
+.container {
+    display: flex;
+    align-items: flex-start;
+
+    /* border: 2px green solid; */
+
+
+}
+.photo {
+    background-image: url(https://c402277.ssl.cf1.rackcdn.com/photos/10341/images/hero_full/wild_dogs-web.jpg?1447180370);
+    height: 387px;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    /* border: 1px black solid; */
+}
+
+.container-a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: white;
+    border: 2px red solid;
+}
+
+.container-a p {
+    border: 2px green solid;
+}
+
+.form {
+    border: 2px yellow solid;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+
+.submit {
+    border: 2px yellow solid;
+    /* flex: 1; */
+    order: 2;
+}
+
+#canvas {
+    border: 2px blue solid;
+    /* order: 1; */
+    background-color: #dec782;
+
+
+}
+
+body {
+    background-color: red;
+    margin:0px;
+
+}
