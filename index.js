@@ -4,6 +4,7 @@ const hb = require("express-handlebars");
 const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
+const csurf = require("csurf");
 const db = require("./db");
 const signPetition = db.signPetition;
 const getSigners = db.getSigners;
@@ -23,7 +24,6 @@ const updateUserProfile = db.updateUserProfile;
 const checkForRowInUserProfile = db.checkForRowInUserProfile;
 const selectInfoFromUsersTable = db.selectInfoFromUsersTable;
 const deleteSigId = db.deleteSigId;
-// const csurf =require("csurf");
 //const cache = require('./cache');
 const checkForSigId = function(req, res, next) {
     if (req.session.sigId) {
@@ -32,6 +32,8 @@ const checkForSigId = function(req, res, next) {
         res.redirect('/petition');
     }
 };
+
+
 //boilerplate for static files
 app.use(express.static(__dirname + "/public"));
 
@@ -51,6 +53,13 @@ app.use(cookieSession({
     maxAge: 1000 * 60 * 60 * 24 * 14
 }));
 
+app.use(csurf());
+
+app.use(function(req, res, next) {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
+
 //routes
 
 app.get("/profile", function(req, res) {
@@ -60,7 +69,7 @@ app.get("/profile", function(req, res) {
 app.post("/profile", function(req, res) {
     userProfile(req.body.age, req.body.city, req.body.url, req.session.user.id).then(function(results) {
         res.redirect('/petition')
-    })
+    });
 });
 
 app.get("/login", function(req, res) {
@@ -73,20 +82,28 @@ app.post("/login", function(req, res) {
         res.render("login", {
             layout: "main",
             error: "There was an error. Please retry."
-        })
+        });
+
     } else {
         userLogin(req.body.email).then(function(results) { //results is coming from db, the hashed pw
-            checkPassword(req.body.password, results.rows[0].hash).then(function(doesMatch) {
-                if (doesMatch) {
+            if (results.rows[0]) {
+                checkPassword(req.body.password, results.rows[0].hash).then(function(doesMatch) {
+                    console.log("CHECKPASSWORD")
+                    if (doesMatch) {
 
-                    req.session.userId = {
-                        id: results.rows[0].id,
-                        email: req.body.email
-                    };
-                    res.redirect("/petition");
-                }
-            });
-
+                        req.session.user = {
+                            id: results.rows[0].id,
+                            email: req.body.email
+                        };
+                        res.redirect("/petition");
+                    } else {
+                        res.render("login", {
+                            layout: "main",
+                            error: "Invalid password. Please try again."
+                        });
+                    }
+                });
+            }
         });
     }
 });
@@ -129,13 +146,16 @@ app.get("/registration", function(req, res) {
 });
 
 app.post("/registration", function(req, res) {
+    console.log("CHECKING POST REG ROUTE");
     if (!req.body.first || !req.body.last || !req.body.email || !req.body.password) {
+        console.log("CHECK IF BLOCK");
         res.render("registration", {
             layout: "main",
             error: "There was an error. Please retry."
         });
 
     } else {
+        console.log("CHECK ELSE BLOCK");
         hashPassword(req.body.password).then(function(hashedPassword) { //access to hashed password inside .then function
             userRegistration(req.body.first, req.body.last, req.body.email, hashedPassword).then(function(results) {
                 console.log("RESULTS", results);
@@ -182,7 +202,7 @@ app.get("/signers", checkForSigId, function(req, res) {
     });
 });
 
-app.get("/petition/signers/:city", function(req, res) {
+app.get("/petition/signers/:city", checkForSigId, function(req, res) {
     getSignersbyCity(req.params.city).then(function(signers) {
         res.render("signers", {
             layout: "main",
@@ -193,6 +213,7 @@ app.get("/petition/signers/:city", function(req, res) {
 });
 
 app.get('/edit', function(req, res) {
+    console.log("REQ SESSION", req.session);
     checkForRowInUserProfile(req.session.user.id).then(function(rowExists) {
         if (rowExists) {
             populateProfile(req.session.user.id).then(function(results) {
@@ -236,7 +257,7 @@ app.post('/edit', function(req, res) {
     if (password) {
         hashPassword(password).then(function(hashPassword) {
             updateWithPasswordProfile(hashPassword, req.session.user.id).then(function() {
-                res.redirect('./petition')
+                res.redirect('/petition')
                 //updated table w new password, still need to update the other stuff in user table as well as the stuff in user profiles table . then redirect.
             });
         });
@@ -251,13 +272,13 @@ app.post('/edit', function(req, res) {
                 if (rowExists) {
                     updateUserProfile(age, city, homepage, req.session.user.id).then(function() {
 
-                        res.redirect('./petition');
+                        res.redirect('/petition');
                     });
 
                     //write a new function that updates the user profile table row. else a function that insert user profile table
                 } else {
                     insertProfile(req.session.user.id, age, city, homepage).then(function() {
-                        res.redirect('./petition');
+                        res.redirect('/petition');
 
                     })
                 }
@@ -277,10 +298,15 @@ app.post('/delete', function(req, res) {
     deleteSigId(req.session.sigId).then(function(results) {
         console.log("RESULTS", results);
         req.session.sigId = null;
-        res.redirect('./petition')
+        res.redirect('/petition')
     });
 });
-//if row exists is true do an updateWithPasswordProfile if not do an insert
+
+app.get('/logout', function(req, res) {
+    req.session = null;
+    res.redirect('/login');
+});
+
 
 //include middle ware when adding csrf
 //req.body is infomration from a fomr

@@ -21,14 +21,14 @@
 
 <!-- <div class="forum"> -->
 <form class="form" action="/petition" method="post">
-
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
     <input id="hidden" type="hidden" name="signature">
     <div class="submit">
     <button>SUBMIT</button>
     </div>
     <canvas id="canvas" width="400" height="70"></canvas>
 </form>
-
+<a href="/logout">Click here to Logout.</a>
 {{error}}
 <!-- <div class="canvas">
 <canvas class="canvas" width="500" height="80"></canvas></div> -->

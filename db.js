@@ -30,7 +30,7 @@ function hashPassword(plainTextPassword) { //for registration
 function userProfile(age, city, url, userID) {
     return new Promise(function(resolve, reject) {
         const q = "INSERT INTO user_profiles (age, city, url, user_id) VALUES ($1, $2, $3, $4) RETURNING id";
-        const params = [age, city, url, userID];
+        const params = [age || null, city || null, url || null, userID || null];
         db.query(q, params).then(function(results) {
             resolve(results);
         }).catch(function(err) {
@@ -125,6 +125,7 @@ function getSigCount() {
         });
     });
 }
+
 function getSigners() {
     return new Promise(function(resolve, reject) {
         const q = `SELECT users.first, users.last, user_profiles.city, user_profiles.age, user_profiles.url

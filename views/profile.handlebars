@@ -4,9 +4,10 @@
     <input type="number" name="age" placeholder="Age">
     <input type="text" name="city" placeholder="City">
     <input type="text" name="url" placeholder="Homepage">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
     <button>CONTINUE</button>
 </form>
 
-<a href="/edit">Please click here to update your profile.</a>
 
 {{error}}
+<a href="/logout">Click here to Logout.</a>
