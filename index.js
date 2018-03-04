@@ -181,7 +181,8 @@ app.get("/thankyou", checkForSigId, function(req, res) {
         res.render("thankyou", {
             layout: "main",
             signature: results[0],
-            count: results[1]
+            count: results[1],
+            csrfToken: req.csrfToken()
         });
     });
     // getSigURL(req.session.sigId).then(function(signature) {
