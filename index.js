@@ -62,6 +62,9 @@ app.use(function(req, res, next) {
 
 //routes
 
+app.get("/", function(req, res) {
+    res.redirect('/registration')
+})
 app.get("/profile", function(req, res) {
     res.render("profile", {layout: "main"});
 });
