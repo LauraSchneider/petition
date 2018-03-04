@@ -6,24 +6,24 @@ const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const csurf = require("csurf");
 const db = require("./db");
-const signPetition = db.signPetition;
-const getSigners = db.getSigners;
-const getSigURL = db.getSigURL;
-const getSigCount = db.getSigCount;
-const userRegistration = db.userRegistration;
-const hashPassword = db.hashPassword;
-const checkPassword = db.checkPassword;
-const userLogin = db.userLogin;
-const userProfile = db.userProfile;
-const getSignersbyCity = db.getSignersbyCity;
-const populateProfile = db.populateProfile;
-const updateWithPasswordProfile = db.updateWithPasswordProfile;
-const updateWithoutPasswordProfile = db.updateWithoutPasswordProfile;
-const insertProfile = db.insertProfile;
-const updateUserProfile = db.updateUserProfile;
-const checkForRowInUserProfile = db.checkForRowInUserProfile;
-const selectInfoFromUsersTable = db.selectInfoFromUsersTable;
-const deleteSigId = db.deleteSigId;
+// const signPetition = db.signPetition;
+// const getSigners = db.getSigners;
+// const getSigURL = db.getSigURL;
+// const getSigCount = db.getSigCount;
+// const userRegistration = db.userRegistration;
+// const hashPassword = db.hashPassword;
+// const checkPassword = db.checkPassword;
+// const userLogin = db.userLogin;
+// const userProfile = db.userProfile;
+// const getSignersbyCity = db.getSignersbyCity;
+// const populateProfile = db.populateProfile;
+// const updateWithPasswordProfile = db.updateWithPasswordProfile;
+// const updateWithoutPasswordProfile = db.updateWithoutPasswordProfile;
+// const insertProfile = db.insertProfile;
+// const updateUserProfile = db.updateUserProfile;
+// const checkForRowInUserProfile = db.checkForRowInUserProfile;
+// const selectInfoFromUsersTable = db.selectInfoFromUsersTable;
+// const deleteSigId = db.deleteSigId;
 //const cache = require('./cache');
 const checkForSigId = function(req, res, next) {
     if (req.session.sigId) {
@@ -38,17 +38,17 @@ const checkForLogin = function(req,res,next) {
         next();
 
     } else {
-        res.redirect('/login')
+        res.redirect('/login');
     }
 };
 
 const checkForLogout = function(req, res, next) {
     if(req.session.user) {
-        return res.redirect('/petition')
+        return res.redirect('/petition');
     } else {
-        next()
+        next();
     }
-}
+};
 //boilerplate for static files
 app.use(express.static(__dirname + "/public"));
 
@@ -78,38 +78,37 @@ app.use(function(req, res, next) {
 //routes
 
 app.get("/", function(req, res) {
-    res.redirect('/registration')
-})
+    res.redirect('/registration');
+});
 app.get("/profile", checkForLogin, function(req, res) {
     res.render("profile", {layout: "main"});
 });
 
 app.post("/profile", function(req, res) {
-    userProfile(req.body.age, req.body.city, req.body.url, req.session.user.id).then(function(results) {
-        res.redirect('/petition')
+    db.userProfile(req.body.age, req.body.city, req.body.url, req.session.user.id).then(function() {
+        res.redirect('/petition');
     });
 });
 
 app.get("/login", checkForLogout, function(req, res) {
     if(req.session.user) {
-        return res.redirect('/petition')
+        return res.redirect('/petition');
     }
-    res.render("login", {layout: "main"});
+    res.render("login", {layout: "loggedoutMain"});
 });
 
 app.post("/login", function(req, res) {
     // console.log(req.body.email);
     if (!req.body.email || !req.body.password) {
         res.render("login", {
-            layout: "main",
+            layout: "loggedoutMain",
             error: "There was an error. Please retry."
         });
 
     } else {
-        userLogin(req.body.email).then(function(results) { //results is coming from db, the hashed pw
+        db.userLogin(req.body.email).then(function(results) { //results is coming from db, the hashed pw
             if (results.rows[0]) {
-                checkPassword(req.body.password, results.rows[0].hash).then(function(doesMatch) {
-                    console.log("CHECKPASSWORD")
+                db.checkPassword(req.body.password, results.rows[0].hash).then(function(doesMatch) {
                     if (doesMatch) {
 
                         req.session.user = {
@@ -119,7 +118,7 @@ app.post("/login", function(req, res) {
                         res.redirect("/petition");
                     } else {
                         res.render("login", {
-                            layout: "main",
+                            layout: "loggedoutMain",
                             error: "Invalid password. Please try again."
                         });
                     }
@@ -149,7 +148,7 @@ app.post("/petition", function(req, res) {
         });
     } else {
         //if signed successfully with all fields filled out
-        signPetition(req.body.signature).then(function(results) {
+        db.signPetition(req.body.signature).then(function(results) {
             //results contains the id from database
             const sigId = results.rows[0].id;
             req.session.sigId = sigId;
@@ -163,24 +162,21 @@ app.post("/petition", function(req, res) {
 });
 
 app.get("/registration", checkForLogout, function(req, res) {
-    res.render("registration", {layout: "main"});
+    res.render("registration", {layout: "loggedoutMain"});
 
 });
 
 app.post("/registration", function(req, res) {
-    console.log("CHECKING POST REG ROUTE");
     if (!req.body.first || !req.body.last || !req.body.email || !req.body.password) {
-        console.log("CHECK IF BLOCK");
         res.render("registration", {
-            layout: "main",
+            layout: "loggedoutMain",
             error: "There was an error. Please retry."
         });
 
     } else {
         console.log("CHECK ELSE BLOCK");
-        hashPassword(req.body.password).then(function(hashedPassword) { //access to hashed password inside .then function
-            userRegistration(req.body.first, req.body.last, req.body.email, hashedPassword).then(function(results) {
-                console.log("RESULTS", results);
+        db.hashPassword(req.body.password).then(function(hashedPassword) { //access to hashed password inside .then function
+            db.userRegistration(req.body.first, req.body.last, req.body.email, hashedPassword).then(function(results) {
                 req.session.user = {
                     id: results.rows[0].id,
                     first: req.body.first,
@@ -189,13 +185,13 @@ app.post("/registration", function(req, res) {
                 res.redirect("/profile");
             });
         });
-    } //END OF else
+    }
 });
 
 app.get("/thankyou", checkForLogin, checkForSigId, function(req, res) {
     Promise.all([
-        getSigURL(req.session.sigId),
-        getSigCount()
+        db.getSigURL(req.session.sigId),
+        db.getSigCount()
     ]).then(function(results) {
         res.render("thankyou", {
             layout: "main",
@@ -217,7 +213,7 @@ app.get("/thankyou", checkForLogin, checkForSigId, function(req, res) {
 }); //ENDS THANK YOU ROUTE
 
 app.get("/signers", checkForLogin, checkForSigId, function(req, res) {
-    getSigners().then(function(signers) {
+    db.getSigners().then(function(signers) {
         res.render("signers", {
             layout: "main",
             signers
@@ -226,7 +222,7 @@ app.get("/signers", checkForLogin, checkForSigId, function(req, res) {
 });
 
 app.get("/petition/signers/:city", checkForLogin, checkForSigId, function(req, res) {
-    getSignersbyCity(req.params.city).then(function(signers) {
+    db.getSignersbyCity(req.params.city).then(function(signers) {
         res.render("signers", {
             layout: "main",
             hideCity: true,
@@ -236,10 +232,9 @@ app.get("/petition/signers/:city", checkForLogin, checkForSigId, function(req, r
 });
 
 app.get('/edit', checkForLogin, function(req, res) {
-    console.log("REQ SESSION", req.session);
-    checkForRowInUserProfile(req.session.user.id).then(function(rowExists) {
+    db.checkForRowInUserProfile(req.session.user.id).then(function(rowExists) {
         if (rowExists) {
-            populateProfile(req.session.user.id).then(function(results) {
+            db.populateProfile(req.session.user.id).then(function(results) {
                 // console.log("RESULTS", req.body);
                 res.render("edit", {
                     layout: "main",
@@ -247,11 +242,12 @@ app.get('/edit', checkForLogin, function(req, res) {
                     last: results.last,
                     email: results.email,
                     age: results.age,
-                    url: results.url
+                    url: results.url,
+                    city: results.city
                 });
             });
         } else {
-            selectInfoFromUsersTable(req.session.user.id).then(function(results) {
+            db.selectInfoFromUsersTable(req.session.user.id).then(function(results) {
                 res.render('edit', {
                     layout: 'main',
                     first: results.first,
@@ -278,32 +274,32 @@ app.post('/edit', function(req, res) {
     } = req.body;
     // const first = req.body.first
     if (password) {
-        hashPassword(password).then(function(hashPassword) {
-            updateWithPasswordProfile(hashPassword, req.session.user.id).then(function() {
+        db.hashPassword(password).then(function(hashPassword) {
+            db.updateWithPasswordProfile(hashPassword, req.session.user.id).then(function() {
                 res.redirect('/petition')
                 //updated table w new password, still need to update the other stuff in user table as well as the stuff in user profiles table . then redirect.
             });
         });
     } else {
-        updateWithoutPasswordProfile(first, last, email, req.session.user.id).then(function() {
+        db.updateWithoutPasswordProfile(first, last, email, req.session.user.id).then(function() {
 
             //updates all the values for the user table we still need to update the user_profiles TABLE
             //we have updated the user_profiles table. Redirect here.
             // res.redirect('/edit')
-            checkForRowInUserProfile(req.session.user.id).then(function(rowExists) {
+            db.checkForRowInUserProfile(req.session.user.id).then(function(rowExists) {
 
                 if (rowExists) {
-                    updateUserProfile(age, city, homepage, req.session.user.id).then(function() {
+                    db.updateUserProfile(age, city, homepage, req.session.user.id).then(function() {
 
                         res.redirect('/petition');
                     });
 
                     //write a new function that updates the user profile table row. else a function that insert user profile table
                 } else {
-                    insertProfile(req.session.user.id, age, city, homepage).then(function() {
+                    db.insertProfile(req.session.user.id, age, city, homepage).then(function() {
                         res.redirect('/petition');
 
-                    })
+                    });
                 }
 
             });
@@ -318,10 +314,10 @@ app.post('/edit', function(req, res) {
 });
 
 app.post('/delete', function(req, res) {
-    deleteSigId(req.session.sigId).then(function(results) {
+    db.deleteSigId(req.session.sigId).then(function(results) {
         console.log("RESULTS", results);
         req.session.sigId = null;
-        res.redirect('/petition')
+        res.redirect('/petition');
     });
 });
 
@@ -333,4 +329,4 @@ app.get('/logout', function(req, res) {
 
 //include middle ware when adding csrf
 //req.body is infomration from a fomr
-app.listen(process.env.PORT || 8080), () => console.log("I'm listening");
+app.listen(process.env.PORT || 8080, () => console.log("I'm listening"));

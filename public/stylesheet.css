@@ -1,7 +1,7 @@
 /* -----------------REGISTRATION PAGE -------------------*/
 html, body {
-    background-color: black;
-    margin: 5px;
+    background-color: green;
+    margin: 0px;
     height: 100%;
 }
 
@@ -375,4 +375,41 @@ cursor: pointer;
     border: 3px #596b24 solid;
     background-color: #dec782;
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+nav li {
+    float: left;
+}
+
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+nav li a:hover {
+    background-color: #111;
 }
