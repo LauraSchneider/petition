@@ -33,7 +33,22 @@ const checkForSigId = function(req, res, next) {
     }
 };
 
+const checkForLogin = function(req,res,next) {
+    if(req.session.user) {
+        next();
 
+    } else {
+        res.redirect('/login')
+    }
+};
+
+const checkForLogout = function(req, res, next) {
+    if(req.session.user) {
+        return res.redirect('/petition')
+    } else {
+        next()
+    }
+}
 //boilerplate for static files
 app.use(express.static(__dirname + "/public"));
 
@@ -65,7 +80,7 @@ app.use(function(req, res, next) {
 app.get("/", function(req, res) {
     res.redirect('/registration')
 })
-app.get("/profile", function(req, res) {
+app.get("/profile", checkForLogin, function(req, res) {
     res.render("profile", {layout: "main"});
 });
 
@@ -75,7 +90,10 @@ app.post("/profile", function(req, res) {
     });
 });
 
-app.get("/login", function(req, res) {
+app.get("/login", checkForLogout, function(req, res) {
+    if(req.session.user) {
+        return res.redirect('/petition')
+    }
     res.render("login", {layout: "main"});
 });
 
@@ -111,7 +129,7 @@ app.post("/login", function(req, res) {
     }
 });
 
-app.get("/petition", function(req, res) {
+app.get("/petition", checkForLogin, function(req, res) {
     // console.log("SESSION", req.session);
     if (req.session.sigId) {
         // console.log("PETITION ROUTE");
@@ -144,8 +162,9 @@ app.post("/petition", function(req, res) {
     }
 });
 
-app.get("/registration", function(req, res) {
+app.get("/registration", checkForLogout, function(req, res) {
     res.render("registration", {layout: "main"});
+
 });
 
 app.post("/registration", function(req, res) {
@@ -173,7 +192,7 @@ app.post("/registration", function(req, res) {
     } //END OF else
 });
 
-app.get("/thankyou", checkForSigId, function(req, res) {
+app.get("/thankyou", checkForLogin, checkForSigId, function(req, res) {
     Promise.all([
         getSigURL(req.session.sigId),
         getSigCount()
@@ -197,7 +216,7 @@ app.get("/thankyou", checkForSigId, function(req, res) {
 
 }); //ENDS THANK YOU ROUTE
 
-app.get("/signers", checkForSigId, function(req, res) {
+app.get("/signers", checkForLogin, checkForSigId, function(req, res) {
     getSigners().then(function(signers) {
         res.render("signers", {
             layout: "main",
@@ -206,7 +225,7 @@ app.get("/signers", checkForSigId, function(req, res) {
     });
 });
 
-app.get("/petition/signers/:city", checkForSigId, function(req, res) {
+app.get("/petition/signers/:city", checkForLogin, checkForSigId, function(req, res) {
     getSignersbyCity(req.params.city).then(function(signers) {
         res.render("signers", {
             layout: "main",
@@ -216,7 +235,7 @@ app.get("/petition/signers/:city", checkForSigId, function(req, res) {
     });
 });
 
-app.get('/edit', function(req, res) {
+app.get('/edit', checkForLogin, function(req, res) {
     console.log("REQ SESSION", req.session);
     checkForRowInUserProfile(req.session.user.id).then(function(rowExists) {
         if (rowExists) {
