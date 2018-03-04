@@ -1,13 +1,22 @@
-<h1>Please enter more info</h1>
+<div id="img-container2">
+    <img id="dog10" src="img/dog10.jpg">
+</div>
 
-<form class="" action="/profile" method="post">
+<h1>Please share more information about yourself (optional).</h1>
+
+<div class="container2">
+
+<form id="profile-form" class="form1" action="/profile" method="post">
     <input type="number" name="age" placeholder="Age">
     <input type="text" name="city" placeholder="City">
     <input type="text" name="url" placeholder="Homepage">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
-    <button>CONTINUE</button>
+    <button id="continue-button" class="signup-button">CONTINUE</button>
 </form>
 
-
 {{error}}
-<a href="/logout">Click here to Logout.</a>
+</div>
+
+<div class="logout">
+    <a href="/logout">Click here to Logout</a>
+</div>

@@ -1,18 +1,27 @@
-<h1> THANK YOU PAGE</h1>
+<div class="thank-you">
+<h1 class="thanks"> Thank You for Your Support</h1>
+<p class="step-closer">We are a step closer to saving this endangered species</p>
+</div>
 
+<
 
-<a href='/signers'>See all {{count}} signers</a>
-
+<div id="sig-box">
 
 <img id="signature-image" src="{{signature}}">
+</div>
+<div class="menu">
+<a id="all-signatures" class="login-link" href='/signers'>See all {{count}} signers</a>
 
-<a href="/edit">Please click here to update your profile.</a>
+<div id="update-profile" class="login-link">
+<a href="/edit">
+    Update your Profile</a>
+</div>
 
+<a class="login-link" href="/logout">Click here to Logout</a>
 
-<a href="/logout">Click here to Logout.</a>
+<form class="login-link" action="/delete" method="post">
+<button id="delete-button"><u>Delete your signature</u></button>
+</div>
 
-<form class="" action="/delete" method="post">
-
-<button>Delete your signature</button>
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
 </form>

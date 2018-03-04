@@ -1,188 +1,378 @@
-/* login page styling */
+/* -----------------REGISTRATION PAGE -------------------*/
+html, body {
+    background-color: black;
+    margin: 5px;
+    height: 100%;
+}
 
-/* .container-1 {
-display: flex;
-
-justify-content: space-between;
-} */
-
-/* .container-1 div {
-    border: 2px black solid; */
-    /* padding 10px; */
-
-/* border: 1px blue solid; */
-/* } */
-
-/* .box-1 {
-    flex: 2;
+.registration-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+/*     border: 2px red solid; */
+    flex: 80%;
 
 }
 
-.box-2 {
-    flex: 1;
+.reg-container {
+/*   border: 3px blue solid; */
+  display: flex;
+  flex: 20%;
+  height: 100%;
+  display: flex;
+/* flex-wrap: no-wrap; */
 
 }
 
-form {
+.container-pic-pup {
+  display: flex;
+/*   border: 3px orange solid; */
+  order: -1;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
 }
 
-/* petition styling */
-
-/* #canvas {
-    background-color: #dec782; */
-    /* position: absolute;
-    top: 87%;
-    left: 33%; */
-    /* height: 8%; */
-    /* border: 3px solid darkolivegreen;
-} */
-
-.first {
-  background-color: #dec782;
-  border: 3px solid darkolivegreen;
-  /* position: absolute;
-  top: 82%;
-  left: 33%;
-  height:  20px; */
-  width: 13%;
-}
-/*
-/* .last {
-  background-color: #dec782;
-  border: 3px solid darkolivegreen;
-  position: absolute;
-  top: 82%;
-  left: 48%;
-  height:  20px;
-  width: 13%;
+.container-pic-pup > div > img {
+padding-left: 80px;
+ height: 650px;
+ width: 400px;
+ object-fit:contain;
+/*   border:3px green solid; */
 }
 
+#link {
+  order: -3;
+/*   border: 2px green dashed; */
+  align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
 
-body {
-    background-color: brown;
-    margin:0px;
+}
+.registration-container > input {
+
+    height: 25px;
+    padding: 3px;
+    font-size: 25px;
+    width: 200px;
+    border:3px #e37600 solid;
+    font-family: georgia;
+    order: 0;
 
 }
 
-button {
-    margin-left: 20px;
-    /* position: absolute;
-    top: 90%;
-    left: 63%; */
-    height: 36px;
-    width: 93px;
-    border-radius: 50px;
-    font-size: 15px;
-    font-family: Roboto Slab;
-    font-weight:  bold;
-    border: 3px solid black;
-    background-color: #b0a7a7;
-    color: white;
-    font:  20px;
-}
-
-
-/* h1 {
-    font-family: Roboto Slab;
-    font-size: 44px;
-    color: whitesmoke;
-    position: absolute;
-    top: 54%;
-    left: 31%;
-}
-
-#p1 {
-        font-family: Roboto Slab;
-        font-size: 20px;
-        color: whitesmoke;
-        position: absolute;
-        top: 64%;
-        left: 32%;
-}
-
-#p2 {
-    font-family: Roboto Slab;
-    font-size: 20px;
-    color: whitesmoke;
-    position: absolute;
-    top: 69%;
-    left: 18%;
-}
-
-#p3 {
-    font-family: Roboto Slab;
-    font-size: 24px;
-    color: whitesmoke;
-    position: absolute;
-    top: 73%;
-    left: 37%; */
-/* } */
-.container {
-
-    height: 387px;
+p, .reg-text {
     width: 100%;
-    /* background-image: url(https://c402277.ssl.cf1.rackcdn.com/photos/10341/images/hero_full/wild_dogs-web.jpg?1447180370); */
+    color: #0088ff;
+    font-size: 18px;
+    font-family: georgia;
+    font-weight: bold;
+    text-align: center;
+/*     border: 2px green solid; */
 
+}
+
+h2, h1 {
+  order: -2;
+  color: #0088ff;
+  font-size: 25px;
+  font-family: georgia;
+  font-weight: bold;
+}
+
+/* h2 {
+  border: 1px yellow solid;
+} */
+
+/* button shared reg and login page */
+.signup-button {
+  border-radius: 20px;
+  margin-top: 30px;
+  height: 50px;
+  width: 220px;
+  font-family: georgia;
+  font-size: 25px;
+  font-weight: bold;
+  background-color: #0088ff;
+  color: black;
+  order: 1;
+cursor: pointer;
+}
+
+/* -----------------LOGIN PAGE -------------------*/
+
+.container-1 {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 100%;
+text-align: center;
+}
+
+#dog3 {
+    height: 280px;
+    width: 420px;
+    order: 1;
+    align-self: center;
+    padding: 100px;
+    object-fit: contain;
+/*     border: 3px green dashed; */
+    padding: 0 10px;
+
+}
+
+.form1 {
+/*      border:3px red solid; */
+     padding: 40px;
+     height: 100%;
+     display: flex;
+     width: 100%;
+
+     /*     flex-wrap: wrap; */
+
+}
+
+.form1 > input {
+    height: 25px;
+    padding: 3px;
+    font-size: 25px;
+    width: 200px;
+    border:3px #e37600 solid;
+    font-family: georgia;
+    flex: 2;
+    margin-left: 25px;
+
+}
+
+#login-button {
+  margin-left: 30px;
+  margin-top: -5px;
+  flex 1;
+      cursor: pointer;
+}
+
+.login-text {
+  margin-left: 25px;
+ align-items: center;
+  color: white;
+/*   border:3px red solid; */
+  order: -1;
+  font-size: 25px;
+  font-family:georgia;
+  width: 100%;
+  font-weight: bold;
+  padding: 20px;
+
+}
+
+/* -----------------PROFILE PAGE -------------------*/
+
+.container2 {
+
+}
+#img-container2 {
+  display: flex;
+  justify-content: center;
+/*   border: 2px green dashed; */
+  width: 100%;
+
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+#profile-form {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+#continue-button {
+  margin-right: 50px;
+margin-top: -8px;
+margin-left: 30px;
+    cursor: pointer;
+}
+
+.logout {
+  /
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 20px;
+  font-family: georgia;
+  font-weight: bold;
+  color: white;
+}
+
+/* -----------------THANK YOU PAGE -------------------*/
+.thank-you {
+  display: flex;
+/*   border: 3px red dashed; */
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+
+}
+.thanks {
+  font-size: 50px;
+  font-family: georgia;
+  font-weight: bold;
+  color: #f0f0f0;
+ width: 100%;
+}
+
+.step-closer {
+  font-size: 25px;
+  font-family: georgia;
+  font-weight: bold;
+  color: #f0f0f0;
+  flex: 1;
+}
+
+
+#sig-box {
+/*   border: 2px blue solid; */
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+#signature-image {
+border: 3px solid darkolivegreen;
+background-color: #dec782;
+}
+
+.menu {
+/*   border: 2px red solid; */
+  display: flex;
+  justify-content: space-around;
+  height: 20%;
+  align-items: flex-end;
+  padding-bottom: 20px;
+}
+
+.login-link{
+    border: 2px blue solid;
+    border-radius: 15px;
+    background-color:  #0088ff;
+    color: black;
+    font-weight: bold;
+    padding: 6px;
+    font-family: georgia;
+    font-size: 15px;
+}
+
+#delete-button {
+/*   background-color:#0088ff; */
+   border: #0088ff;
+   border-radius: 15px;
+   font-family: georgia;
+    font-size: 15px;
+    font-weight: bold;
+    background-color:  #0088ff;
+}
+
+/* -----------------EDIT PAGE -------------------*/
+
+.edit {
+/*   border: 2px red solid; */
+  display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 500px;
+    padding: 20px;
+}
+
+.edit > input {
+ height: 25px;
+    padding: 3px;
+    font-size: 25px;
+    width: 200px;
+    border:3px #e37600 solid;
+    font-family: georgia;
+    order: 0;
+}
+
+.update-button {
+  border-radius: 20px;
+  height: 50px;
+  width: 220px;
+  font-family: georgia;
+  font-size: 25px;
+  font-weight: bold;
+  background-color: #0088ff;
+  color: black;
+cursor: pointer;
+
+}
+#img-container2 {
+/*   border: 2px blue solid; */
+  width:100%;
+}
+
+#dog2 {
+  width: 300px;
+  height: 200px;
+}
+
+/* -----------------PETITION PAGE -------------------*/
+
+.container-img {
+    height: 350px;
+    width: 100%;
     background-position: center;
     background-size: cover;
     background-image: url(./img/dog4.jpg);
-
     }
 
-.container {
-    display: flex;
-    align-items: flex-start;
-
-    /* border: 2px green solid; */
-
-
-}
-.photo {
-    background-image: url(https://c402277.ssl.cf1.rackcdn.com/photos/10341/images/hero_full/wild_dogs-web.jpg?1447180370);
-    height: 387px;
-    width: 100%;
-    background-position: center;
-    background-size: cover;
-    /* border: 1px black solid; */
-}
-
-.container-a {
+.container-petition {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    color: white;
-    border: 2px red solid;
+/*     border: 2px red solid; */
 }
 
-.container-a p {
-    border: 2px green solid;
+.container-petition > div > h1, p {
+  color: whitesmoke;
 }
 
-.form {
-    border: 2px yellow solid;
-    display: flex;
-    justify-content: center;
-    padding: 5px;
+.submit-button {
+    border-radius: 20px;
+    height: 50px;
+    width: 220px;
+    font-family: georgia;
+    font-size: 15px;
+    font-weight:  bold;
+    border: 3px #596b24 solid;
+    background-color: #0088ff;
+    cursor: pointer;
+    color: black;
+    margin-left: 60px;
+    margin-top: 10px;
+
 }
 
 .submit {
-    border: 2px yellow solid;
-    /* flex: 1; */
-    order: 2;
+/*     border: 2px yellow solid; */
+    display: flex;
+    justify-content: center;
+
 }
 
 #canvas {
-    border: 2px blue solid;
-    /* order: 1; */
+    border: 3px #596b24 solid;
     background-color: #dec782;
-
-
-}
-
-body {
-    background-color: red;
-    margin:0px;
 
 }

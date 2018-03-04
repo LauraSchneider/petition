@@ -1,13 +1,25 @@
-<form class="" action="/registration" method="post">
-    <input type="text" name="first" placeholder="First name">
-    <input type="text" name="last" placeholder="Last name">
-    <input type="text" name="email" placeholder="Email">
-    <input type="password" name="password" placeholder="Password">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+<div class="reg-container">
+    <div class="container-pic-pup">
+        <div class="pic-pup">
+            <img src="img/dog6.jpg">
+        </div>
 
-    <button>SIGN UP</button>
-</form>
+    </div>
+    <form class="registration-container" action="/registration" method="post">
+        <input type="text" name="first" placeholder="First name">
+        <input type="text" name="last" placeholder="Last name">
+        <input type="text" name="email" placeholder="Email">
+        <input type="password" name="password" placeholder="Password">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <button class="signup-button">SIGN UP</button>
+        <div id="link">
+            <h2>Register below to Save the African Wild Dogs</h2>
+            <p>Already registered?</p>
+            <a class="reg-text" href='/login'>Login here.</a>
+        </div>
+    </form>
+</div>
+
+
 
 {{error}}
-
-<a href='/login'>You don't have an account yet? Please register here.</a>

@@ -310,4 +310,4 @@ app.get('/logout', function(req, res) {
 
 //include middle ware when adding csrf
 //req.body is infomration from a fomr
-app.listen(8080, () => console.log("I'm listening"));
+app.listen(process.env.PORT || 8080), () => console.log("I'm listening");

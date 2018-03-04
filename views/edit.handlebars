@@ -1,3 +1,7 @@
+<div id="img-container2">
+    <img id="dog2" src="img/dog2.jpg">
+</div>
+<div class = "edit-container">
 <form class="edit" action="/edit" method="post">
     <input type="text" name="first" placeholder="First name" value="{{first}}">
     <input type="text" name="last" placeholder="Last name" value="{{last}}">
@@ -7,5 +11,6 @@
     <input type="text" name="homepage" placeholder="Homepage" value="{{url}}">
     <input type="password" name="password" placeholder="Password">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
-    <button>UPDATE</button>
+    <button class="update-button">UPDATE</button>
 </form>
+</div>
