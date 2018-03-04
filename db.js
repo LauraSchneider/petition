@@ -1,13 +1,20 @@
 const bcrypt = require('bcryptjs');
+const spicedPg = require("spiced-pg");
+let dbUrl;
 
-var spicedPg = require("spiced-pg");
+//switching from heroku app and local browser
+if (process.env.DATABASE_URL) {
+    dbUrl = process.env.DATABASE_URL;
+} else {
+    const {
+        dbUser,
+        dbPass
+    } = require("./secrets");
+    dbUrl = `postgres:${dbUser}:${dbPass}@localhost:5432/signatures`;
+}
 
-var {
-    dbUser,
-    dbPass
-} = require("./secrets");
-//to be modified:
-const db = spicedPg(`postgres:${dbUser}:${dbPass}@localhost:5432/signatures`);
+const db = spicedPg(dbUrl);
+
 
 function hashPassword(plainTextPassword) { //for registration
     return new Promise(function(resolve, reject) {
