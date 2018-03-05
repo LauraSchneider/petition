@@ -1,27 +1,28 @@
 <div class="thank-you">
-<h1 class="thanks"> Thank You for Your Support</h1>
-<p class="step-closer">We are a step closer to saving this endangered species</p>
+    <h1 class="thanks"> Thank You for Your Support</h1>
+    <p class="step-closer">We are a step closer to saving this endangered species.</p>
 </div>
-
-<
 
 <div id="sig-box">
-
-<img id="signature-image" src="{{signature}}">
+    <img id="signature-image" src="{{signature}}">
+</div>
+<div id="dogthanks">
+    <img id="dog7" src="img/dog7.jpg">
 </div>
 <div class="menu">
-<a id="all-signatures" class="login-link" href='/signers'>See all {{count}} signers</a>
+    <a id="all-signatures" class="login-link" href='/signers'>See all {{count}} signers</a>
 
-<div id="update-profile" class="login-link">
-<a href="/edit">
+    <div id="update-profile" class="login-link">
+        <a href="/edit">
     Update your Profile</a>
-</div>
+    </div>
 
-<a class="login-link" href="/logout">Click here to Logout</a>
 
-<form class="login-link" action="/delete" method="post">
-<button id="delete-button"><u>Delete your signature</u></button>
-</div>
+    <form class="login-link" action="/delete" method="post">
+        <button id="delete-button"><u>Delete Signature</u></button>
 
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
 </form>
+
+<a class="login-link" href="/logout">Click here to Logout</a>
+</div>

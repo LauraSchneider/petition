@@ -6,27 +6,9 @@ const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const csurf = require("csurf");
 const db = require("./db");
-// const signPetition = db.signPetition;
-// const getSigners = db.getSigners;
-// const getSigURL = db.getSigURL;
-// const getSigCount = db.getSigCount;
-// const userRegistration = db.userRegistration;
-// const hashPassword = db.hashPassword;
-// const checkPassword = db.checkPassword;
-// const userLogin = db.userLogin;
-// const userProfile = db.userProfile;
-// const getSignersbyCity = db.getSignersbyCity;
-// const populateProfile = db.populateProfile;
-// const updateWithPasswordProfile = db.updateWithPasswordProfile;
-// const updateWithoutPasswordProfile = db.updateWithoutPasswordProfile;
-// const insertProfile = db.insertProfile;
-// const updateUserProfile = db.updateUserProfile;
-// const checkForRowInUserProfile = db.checkForRowInUserProfile;
-// const selectInfoFromUsersTable = db.selectInfoFromUsersTable;
-// const deleteSigId = db.deleteSigId;
-//const cache = require('./cache');
+
 const checkForSigId = function(req, res, next) {
-    if (req.session.sigId) {
+    if (req.session.user.sigId) {
         next();
     } else {
         res.redirect('/petition');
@@ -110,12 +92,21 @@ app.post("/login", function(req, res) {
             if (results.rows[0]) {
                 db.checkPassword(req.body.password, results.rows[0].hash).then(function(doesMatch) {
                     if (doesMatch) {
-
-                        req.session.user = {
-                            id: results.rows[0].id,
-                            email: req.body.email
+                        db.getUserInfo(results.rows[0].id).then(function(userInfo) {
+                            req.session.user = {
+                                id: results.rows[0].id,
+                                // email: req.body.email
+                                email: userInfo.email,
+                                age: userInfo.age,
+                                city: userInfo.city,
+                                sigId: userInfo.sig_id,
+                                first: userInfo.first,
+                                last: userInfo.last,
+                                url: userInfo.url,
                         };
+                        console.log("ABOUT TO SET SESSION", req.session);
                         res.redirect("/petition");
+                    });
                     } else {
                         res.render("login", {
                             layout: "loggedoutMain",
@@ -130,7 +121,7 @@ app.post("/login", function(req, res) {
 
 app.get("/petition", checkForLogin, function(req, res) {
     // console.log("SESSION", req.session);
-    if (req.session.sigId) {
+    if (req.session.user.sigId) {
         // console.log("PETITION ROUTE");
         res.redirect('/thankyou');
     } else {
@@ -151,7 +142,7 @@ app.post("/petition", function(req, res) {
         db.signPetition(req.body.signature).then(function(results) {
             //results contains the id from database
             const sigId = results.rows[0].id;
-            req.session.sigId = sigId;
+            req.session.user.sigId = sigId;
             // req.session = {
             //     sigId
             // };
@@ -174,7 +165,7 @@ app.post("/registration", function(req, res) {
         });
 
     } else {
-        console.log("CHECK ELSE BLOCK");
+
         db.hashPassword(req.body.password).then(function(hashedPassword) { //access to hashed password inside .then function
             db.userRegistration(req.body.first, req.body.last, req.body.email, hashedPassword).then(function(results) {
                 req.session.user = {
@@ -190,7 +181,7 @@ app.post("/registration", function(req, res) {
 
 app.get("/thankyou", checkForLogin, checkForSigId, function(req, res) {
     Promise.all([
-        db.getSigURL(req.session.sigId),
+        db.getSigURL(req.session.user.sigId),
         db.getSigCount()
     ]).then(function(results) {
         res.render("thankyou", {
@@ -200,7 +191,7 @@ app.get("/thankyou", checkForLogin, checkForSigId, function(req, res) {
             csrfToken: req.csrfToken()
         });
     });
-    // getSigURL(req.session.sigId).then(function(signature) {
+    // getSigURL(req.session.user.sigId).then(function(signature) {
     // getSigCount().then(function(count) {
     //     res.render('thankyou', {
     //         layout: 'main',
@@ -314,9 +305,8 @@ app.post('/edit', function(req, res) {
 });
 
 app.post('/delete', function(req, res) {
-    db.deleteSigId(req.session.sigId).then(function(results) {
-        console.log("RESULTS", results);
-        req.session.sigId = null;
+    db.deleteSigId(req.session.user.sigId).then(function(results) {
+        req.session.user.sigId = null;
         res.redirect('/petition');
     });
 });

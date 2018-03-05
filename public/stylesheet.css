@@ -1,6 +1,6 @@
 /* -----------------REGISTRATION PAGE -------------------*/
 html, body {
-    background-color: green;
+    background-color: black;
     margin: 0px;
     height: 100%;
 }
@@ -54,7 +54,6 @@ padding-left: 80px;
 
 }
 .registration-container > input {
-
     height: 25px;
     padding: 3px;
     font-size: 25px;
@@ -65,7 +64,7 @@ padding-left: 80px;
 
 }
 
-p, .reg-text {
+#p, .reg-text {
     width: 100%;
     color: #0088ff;
     font-size: 18px;
@@ -79,7 +78,7 @@ p, .reg-text {
 h2, h1 {
   order: -2;
   color: #0088ff;
-  font-size: 25px;
+  font-size: 26px;
   font-family: georgia;
   font-weight: bold;
 }
@@ -103,6 +102,9 @@ h2, h1 {
 cursor: pointer;
 }
 
+.signup-button:hover {
+    background-color: rgb(102, 255, 113);
+}
 /* -----------------LOGIN PAGE -------------------*/
 
 .container-1 {
@@ -221,43 +223,60 @@ margin-left: 30px;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-
-
 }
+
+
 .thanks {
-  font-size: 50px;
+  font-size: 30px;
   font-family: georgia;
   font-weight: bold;
   color: #f0f0f0;
  width: 100%;
+
 }
 
 .step-closer {
-  font-size: 25px;
+  font-size: 20px;
   font-family: georgia;
   font-weight: bold;
   color: #f0f0f0;
   flex: 1;
+  text-align: center;
+  margin-top: auto;
 }
 
+#dogthanks {
 
+  width: 100%;
+  display: flex;
+  justify-content: center;
+/*   border: 4px yellow solid; */
+  padding-bottom: 30px;
+}
+#dog7 {
+  width: 350px;
+  height: 200px;
+}
 #sig-box {
 /*   border: 2px blue solid; */
   display: flex;
   justify-content: center;
   padding: 30px;
+
 }
 
 #signature-image {
 border: 3px solid darkolivegreen;
 background-color: #dec782;
+height: 50px;
+width: 300px;
 }
 
 .menu {
 /*   border: 2px red solid; */
   display: flex;
   justify-content: space-around;
-  height: 20%;
+  height: 5%;
   align-items: flex-end;
   padding-bottom: 20px;
 }
@@ -266,13 +285,15 @@ background-color: #dec782;
     border: 2px blue solid;
     border-radius: 15px;
     background-color:  #0088ff;
-    color: black;
     font-weight: bold;
     padding: 6px;
     font-family: georgia;
     font-size: 15px;
 }
 
+a {
+    color: black;
+}
 #delete-button {
 /*   background-color:#0088ff; */
    border: #0088ff;
@@ -335,6 +356,7 @@ cursor: pointer;
     background-position: center;
     background-size: cover;
     background-image: url(./img/dog4.jpg);
+    flex-shrink: 1;
     }
 
 .container-petition {
@@ -344,10 +366,23 @@ cursor: pointer;
 /*     border: 2px red solid; */
 }
 
-.container-petition > div > h1, p {
+.container-petition > div > h1, .box-2, .box-3 {
   color: whitesmoke;
+  font-family: georgia;
+/*   border: 1px blue dashed; */
 }
 
+.container-petition > div > h1 {
+margin-top: -10px;
+  font-size: 30px;
+}
+
+.container-petition > .box-2, .box-3 {
+  font-size: 22px;
+  text-align: center;
+  margin-top: -30px;
+
+}
 .submit-button {
     border-radius: 20px;
     height: 50px;
@@ -361,7 +396,11 @@ cursor: pointer;
     color: black;
     margin-left: 60px;
     margin-top: 10px;
+    transition: background-color 0.15s linear;
 
+}
+.submit-button:hover {
+    background-color: rgb(232, 98, 32);
 }
 
 .submit {
@@ -377,24 +416,46 @@ cursor: pointer;
 
 }
 
+/* -----------------SIGNERS PAGE -------------------*/
+.signers-container {
+/*   border: 2px red solid; */
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 50px;
+  margin-left: 30%;
+  height: 100%;
+}
+
+.signers-container > a:hover {
+color:#0088ff;
+}
+
+.signers-container * {
+      font-size: 20px;
+  font-family: georgia;
+  color: whitesmoke;
+}
+
+.age {
+  color: whitesmoke;
+}
 
 
 
 
-
-
-
-
-
-
-
+/* -----------------NAV MENU -------------------*/
 
 nav ul {
+  display: flex;
+  justify-content: space-evenly;
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #a78819;
 }
 
 nav li {
@@ -404,12 +465,12 @@ nav li {
 nav li a {
     display: block;
     color: white;
-    text-align: center;
+    font-size: 20px;
     padding: 14px 16px;
     text-decoration: none;
 }
 
 /* Change the link color to #111 (black) on hover */
 nav li a:hover {
-    background-color: #111;
+    background-color: #ebdb08;
 }

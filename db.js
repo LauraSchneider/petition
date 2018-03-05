@@ -34,6 +34,29 @@ function hashPassword(plainTextPassword) { //for registration
     });
 }
 
+function getUserInfo(userID) {
+    return new Promise(function(resolve, reject) {
+        const q = `
+        SELECT
+            users.id, users.first, users.last, users.email,
+            user_profiles.age, user_profiles.city, user_profiles.url,
+            signatures.id AS sig_id
+        FROM users
+        FULL OUTER JOIN signatures
+            ON users.id = signatures.id
+        FULL OUTER JOIN user_profiles
+            ON user_profiles.user_id = signatures.id
+        WHERE users.id = $1`;
+        const params = [userID];
+        db.query(q, params).then(function(results) {
+            console.log("THS IS THE results", results.rows[0]);
+            resolve(results.rows[0]);
+        }).catch(function(err) {
+            reject(err);
+        });
+    });
+}
+
 function userProfile(age, city, url, userID) {
     return new Promise(function(resolve, reject) {
         const q = "INSERT INTO user_profiles (age, city, url, user_id) VALUES ($1, $2, $3, $4) RETURNING id";
@@ -294,6 +317,7 @@ module.exports = {
     updateUserProfile,
     checkForRowInUserProfile,
     selectInfoFromUsersTable,
-    deleteSigId
+    deleteSigId,
+    getUserInfo
 
 };
