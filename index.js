@@ -82,6 +82,7 @@ app.get("/login", checkForLogout, function(req, res) {
 app.post("/login", function(req, res) {
     // console.log(req.body.email);
     if (!req.body.email || !req.body.password) {
+        console.log("PLEASE SHOW UP");
         res.render("login", {
             layout: "loggedoutMain",
             error: "There was an error. Please retry."

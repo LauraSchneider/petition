@@ -1,6 +1,6 @@
 <h1>See the List of Supporters &nbsp<u>You</u>&nbsp have Joined</h1>
 
-<div class="signers-container">
+<!-- <div class="signers-container">
     {{#each signers}}
     {{#if this.url}}
         <p class="signers-line"><a id="linkname" href='{{url}}'>{{this.first}} {{this.last}}</a>
@@ -11,5 +11,17 @@
     {{/if}}
         </a></p>
     {{/each}}
-</div>
+</div> -->
 <!-- <a href="/logout">Click here to Logout.</a> -->
+
+{{#each signers}}
+        <div class="signers-container">
+            {{#if this.url}}
+                <p><a href="{{url}}">{{this.first}} {{this.last}}</a>  ({{#if this.age}}{{this.age}}, {{/if}}{{#if hideCity}}){{else}}<a href="/petition/signers/{{city}}">{{city}}</a>){{/if}}</p>
+            {{else}}
+                <p>{{this.first}} {{this.last}}  ({{#if this.age}}{{this.age}}, {{/if}}{{#if hideCity}}){{else}}<a href="/petition/signers/{{city}}">{{city}}</a>){{/if}}</p>
+            {{/if}}
+
+
+        </div>
+    {{/each}}
