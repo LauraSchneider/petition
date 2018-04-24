@@ -2,9 +2,7 @@
 
 I built a petition as a multi-page website. The user starts at the registration page as shown below:
 
-
-
-![petition_reg_mid](/Users/lauraschneider/Desktop/petition_reg_mid.gif)
+![petition_reg_demo](/Users/lauraschneider/Desktop/horseradish-petition/petition_reg_demo.gif)
 
 
 
@@ -12,7 +10,7 @@ Next, the user is directed to the petition page, where one can virtually write t
 
 
 
-![petition_reg_mid](/Users/lauraschneider/Desktop/petition_reg_mid.gif)
+![petition_signature_demo](/Users/lauraschneider/Desktop/horseradish-petition/petition_signature_demo.gif)
 
 
 
