@@ -1,21 +1,19 @@
 **Tech Stack:** Javascript, HTML, CSS, Express.js, Canvas, Express-Handlebars, Node.js, and PostgreSQL.
 
-
-
-Towards the second half of the 12 weeks SPICED coding bootcamp, I started learning about the back-end. I build a petition project, a multi-page website.
-
-First, a user would be navigated to this page below to register.
-
-[petition-registration.mov](/petition-registration.mov)
+I built a petition as a multi-page website. The user starts at the registration page as shown below:
 
 
 
-<video width="320" height="240" controls>
-  <source src="petition-registration.mov" type="video/mp4">
-</video>
-
-![Screen Shot 2018-04-24 at 14.08.05](/Users/lauraschneider/Desktop/Screen Shot 2018-04-24 at 14.08.05.png)
+![petition_reg_mid](/Users/lauraschneider/Desktop/petition_reg_mid.gif)
 
 
 
-![Screen Shot 2018-04-24 at 14.23.58](/Users/lauraschneider/Desktop/Screen Shot 2018-04-24 at 14.23.58.png)
+Next, the user is directed to the petition page, where one can virtually write their signature onto a canvas to support the cause of saving African Wild Dogs. From here, the user is directed to the thank you page where one can navigate to the current signers page, edit profile page, delete signature page or simply logout.
+
+
+
+![petition_reg_mid](/Users/lauraschneider/Desktop/petition_reg_mid.gif)
+
+
+
+The petition is up on heroku where you can also sign to the cause: https://lauras-petition.herokuapp.com/ .
